@@ -1,44 +1,21 @@
-# database ?? ??
+# database 연동 설정
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #    ?? PC? ????? Database??? ?? ???.
-    url: jdbc:mysql://127.0.0.1:3306/logintest?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    #    mysql? ??? ??? ?? ??? ?? ???.
+    #    각자 PC에 만들어놓은 Database이름을 써야 합니다.
+    url: jdbc:mysql://j9a406.p.ssafy.io:53306/sys?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    #    mysql에 생성한 사용자 계정 정보를 써야 합니다.
     username: root
-    password: 1234
-
-#    #??? ?? DB
-#    url: jdbc:mysql://j9a406.p.ssafy.io:53306/logintest?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: root
-#    password: dptmzbdpf332414
-
+    password: dptmzbdpf332414
   thymeleaf:
     cache: false
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 351341135404-6fncoiqsb805cml4tevaq7jdv5vaplic.apps.googleusercontent.com
-            client-secret: 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
-            scope:
-              - email
-              - profile
 
-  # spring data jpa ??
+  # spring data jpa 설정
   jpa:
     database-platform: org.hibernate.dialect.MySQL57Dialect
     open-in-view: false
     show-sql: true
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-      defer-datasource-initialization: true
-jwt:
-  issuer: ajufresh@gmail.com
-  secret-key: study-springboot
-
-
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
