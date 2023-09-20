@@ -1,0 +1,2 @@
+after first jenkins docker run, install following plugins
+docker, docker-pipeline, docker-API, docker-commons, Generic Webhook Trigger Plugin
