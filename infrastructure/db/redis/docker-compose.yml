@@ -1,0 +1,11 @@
+services:
+  redis:
+    image: redis:7.2
+    restart: unless-stopped
+    volumes:
+      - ./redis.conf:/etc/redis/redis.conf
+    ports:
+      - "56379:6379"
+    entrypoint:
+      - redis-server
+      - /etc/redis/redis.conf
