@@ -1,5 +1,9 @@
 # database 연동 설정
 spring:
+  profiles:
+    group:
+      "local": "local, jwt, oauth"
+    active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #    각자 PC에 만들어놓은 Database이름을 써야 합니다.
@@ -9,6 +13,23 @@ spring:
     password: dptmzbdpf332414
   thymeleaf:
     cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 351341135404-6fncoiqsb805cml4tevaq7jdv5vaplic.apps.googleusercontent.com
+            client-secret: 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
+            redirectUri: http://localhost:8080/login/oauth2/code/google
+            scope:
+              - email
+              - profile
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            user-name-attribute: sub
 
   # spring data jpa 설정
   jpa:
@@ -19,7 +40,12 @@ spring:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
   data:
     redis:
       host: j9a406.p.ssafy.io
       port: 56379
+
+jwt:
+  issuer: ajufresh@gmail.com
+  secret-key: study-springboot
