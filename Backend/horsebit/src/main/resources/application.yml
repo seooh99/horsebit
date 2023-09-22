@@ -41,6 +41,11 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
+  data:
+    redis:
+      host: j9a406.p.ssafy.io
+      port: 56379
+
 jwt:
   issuer: ajufresh@gmail.com
   secret-key: study-springboot
