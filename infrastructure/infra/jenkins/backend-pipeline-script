@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+    
+    environment {
+        repository = 'horsebit/springboot'
+        dockerContainer = 'spring-spring-1'
+        dockerImage = ''
+    }
+    
+    stages {
+        stage('Gitlab repare') {
+            steps {
+                git branch: 'develop/backend', credentialsId: 'gitlab-deploy-token', url: 'https://lab.ssafy.com/s09-fintech-finance-sub2/S09P22A406.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                dir('Backend/horsebit/') {
+                    sh'''
+                    chmod u+x gradlew
+                    echo 'Start bootJar'
+                    ./gradlew clean bootJar
+                    '''
+                }
+            }
+        }
+        
+        stage('Find jar file') {
+            steps {
+                script {
+                    dir('Backend/horsebit/') {
+                        jarFilePath = sh(script: 'find . -type f -name "*.jar"', returnStdout: true).trim()
+                        echo "Found jar file at: ${jarFilePath}"
+                    }
+                }
+            }
+        }
+        
+        stage('Build image') {
+            steps {
+                script {
+                    dir('Backend/horsebit/') {
+                        dockerImage = docker.build("${repository}:${env.BUILD_NUMBER}", "-f Dockerfile .")
+                        sh "echo ${dockerImage}"
+                    }
+                }
+            }
+        }
+        
+        stage('Run container') {
+            steps {
+                script {
+                    dir('Backend/horsebit/') {
+                        sh "docker rm -f ${dockerContainer}"
+                        sh "docker run -d -p 5000:8080 --name ${dockerContainer} ${dockerImage.id}"
+                    }
+                }
+            }
+        }
+    }
+}
