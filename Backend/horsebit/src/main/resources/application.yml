@@ -20,17 +20,28 @@ spring:
           google:
             client-id: 423467642364-p8mlbskkjht9t5dptd2odmosrb2g47ta.apps.googleusercontent.com
             client-secret: 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
-#            redirectUri: http://localhost:8080/login/oauth2/code/google
+            redirectUri: http://localhost:8080/login/oauth2/code/google
             scope:
               - openid
               - email
               - profile
-        provider:
-          google:
-            authorization-uri: https://accounts.google.com/o/oauth2/auth
-            token-uri: https://www.googleapis.com/oauth2/v4/token
-            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
-            user-name-attribute: sub
+#        provider:
+#          google:
+#            authorization-uri: https://accounts.google.com/o/oauth2/auth
+#            token-uri: https://www.googleapis.com/oauth2/v4/token
+#            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+#            user-name-attribute: sub
+      provider:
+        google:
+          jwks: >
+            {
+              "kty": "RSA",
+              "use": "sig",
+              "alg": "RS256",
+              "kid": "6f7254101f56e41cf35c9926de84a2d552b4c6f1",
+              "n": "oUriU8GqbRw-avcMn95DGW1cpZR1IoM6L7krfrWvLSSCcSX6Ig117o25Yk7QWBiJpaPV0FbP7Y5-DmThZ3SaF0AXW-3BsKPEXfFfeKVc6vBqk3t5mKlNEowjdvNTSzoOXO5UIHwsXaxiJlbMRalaFEUm-2CKgmXl1ss_yGh1OHkfnBiGsfQUndKoHiZuDzBMGw8Sf67am_Ok-4FShK0NuR3-q33aB_3Z7obC71dejSLWFOEcKUVCaw6DGVuLog3x506h1QQ1r0FXKOQxnmqrRgpoHqGSouuG35oZve1vgCU4vLZ6EAgBAbC0KL35I7_0wUDSMpiAvf7iZxzJVbspkQ"
+              "e": "AQAB"
+            }
 
   # spring data jpa 설정
   jpa:
@@ -47,6 +58,6 @@ spring:
       host: j9a406.p.ssafy.io
       port: 56379
 
-jwt:
-  issuer: ajufresh@gmail.com
-  secret-key: study-springboot
+#jwt:
+#  issuer: ajufresh@gmail.com
+#  secret-key: study-springboot
