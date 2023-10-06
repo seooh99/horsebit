@@ -40,7 +40,7 @@ public class TokenProvider {
     private final byte[] sharedSecret;
 
     public TokenProvider(
-            @Value("1200000") Long ACCESS_TOKEN_EXPIRATION_TIME,
+            @Value("10000000") Long ACCESS_TOKEN_EXPIRATION_TIME,
             @Value("1210000000") Long REFRESH_TOKEN_EXPIRATION_TIME,
             UserRepository userRepository) {
         this.ACCESS_TOKEN_EXPIRATION_TIME = ACCESS_TOKEN_EXPIRATION_TIME;
