@@ -49,7 +49,7 @@ public class InitiatorServiceImpl implements InitiatorService {
 
     @Override
     public void resetTokens(Long tokenNo) {
-        LocalDateTime initialTime = LocalDateTime.parse("2023-09-18T00:00:00.00");
+        LocalDateTime initialTime = LocalDateTime.parse("2023-10-06T00:00:00.00");
         resetTokens(tokenNo, initialTime, 10000L);
     }
 
