@@ -41,10 +41,10 @@ class CandleRepositoryTest {
     @Test
     void saveCandleData() {
         for(long tokenNo = 1; tokenNo <= 25; ++tokenNo) {
-            LocalDateTime endTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
-            long dataSize = 180;
-            RBucket<LocalDateTime> initialTimeRBucket = redissonClient.getBucket(CANDLE_INITIAL_TIME_PREFIX + tokenNo);
-            initialTimeRBucket.set(endTime.minusMinutes(dataSize).minusHours(9L));
+//            LocalDateTime endTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+//            long dataSize = 180;
+//            RBucket<LocalDateTime> initialTimeRBucket = redissonClient.getBucket(CANDLE_INITIAL_TIME_PREFIX + tokenNo);
+//            initialTimeRBucket.set(endTime.minusMinutes(dataSize).minusHours(9L));
             List<Candle> candleList = Arrays.asList(
                     new Candle(LocalDateTime.now(ZoneId.of("Asia/Seoul")), 3072L, 3101L, 3138L, 3046L, 113.298),
                     new Candle(LocalDateTime.now(ZoneId.of("Asia/Seoul")), 3101L, 3065L, 3139L, 3063L, 7805.761),
@@ -229,11 +229,11 @@ class CandleRepositoryTest {
             );
             RList<Candle> candleRList = redissonClient.getList(listNameGenerator(tokenNo, CandleConstant.CANDLE_TYPE_LIST.get(0).getCandleType()));
             candleRList.clear();
-            for(long index = dataSize; 0 < index; --index) {
-                Candle candle = candleList.get((int) (dataSize - index));
-                candle.setStartTime(endTime.minusMinutes(index).minusHours(9L)); // local: seoul, server: gmt
-                candleRList.add(candle);
-            }
+//            for(long index = dataSize; 0 < index; --index) {
+//                Candle candle = candleList.get((int) (dataSize - index));
+//                candle.setStartTime(endTime.minusMinutes(index).minusHours(9L));
+//                candleRepository.updateCandle();
+//            }
         }
     }
 

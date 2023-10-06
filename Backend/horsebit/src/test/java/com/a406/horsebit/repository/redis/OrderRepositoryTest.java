@@ -39,10 +39,15 @@ class OrderRepositoryTest {
 
     @Test
     void generateUserList() {
-        orderRepository.newUserOrderList(1L, 1L);
-        orderRepository.newUserOrderList(1L, 2L);
-        orderRepository.newUserOrderList(2L, 1L);
-        orderRepository.newUserOrderList(2L, 2L);
+        for(long i = 1L; i <= 45L; i++) {
+            for(long j = 1L; j <= 25L; j++) {
+                orderRepository.resetUserOrderList(i, j);
+            }
+        }
+//        orderRepository.newUserOrderList(1L, 1L);
+//        orderRepository.newUserOrderList(1L, 2L);
+//        orderRepository.newUserOrderList(2L, 1L);
+//        orderRepository.newUserOrderList(2L, 2L);
     }
 
     //@Test
