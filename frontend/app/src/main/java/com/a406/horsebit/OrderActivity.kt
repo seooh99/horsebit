@@ -1,6 +1,8 @@
 package com.a406.horsebit
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -21,15 +23,17 @@ class OrderActivity : AppCompatActivity() {
     var tokenNo: Long = 0
     var code: String = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+    private val handler = Handler(Looper.getMainLooper())
+    private val updateInterval = 1000L // 1초마다 업데이트
 
-        binding.hsvTitle.isHorizontalScrollBarEnabled = false
+    private val apiRunnable = object : Runnable {
+        override fun run() {
+            updateTokenListDetail() // 캔들 차트 데이터 업데이트
+            handler.postDelayed(this, updateInterval)
+        }
+    }
 
-        tokenNo = intent.getLongExtra("tokenNo", 0)
-        code = intent.getStringExtra("code") ?: ""
-
+    private fun updateTokenListDetail() {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)  // import androidx.preference.PreferenceManager 인지 확인
         val token = pref.getString("SERVER_ACCESS_TOKEN", "1")
 
@@ -88,6 +92,24 @@ class OrderActivity : AppCompatActivity() {
                 Log.d("로그", "코인 상세 조회 (SSE): onFailure")
             }
         })
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+
+        binding.hsvTitle.isHorizontalScrollBarEnabled = false
+
+        tokenNo = intent.getLongExtra("tokenNo", 0)
+        code = intent.getStringExtra("code") ?: ""
+
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)  // import androidx.preference.PreferenceManager 인지 확인
+        val token = pref.getString("SERVER_ACCESS_TOKEN", "1")
+
+        updateTokenListDetail()
+
+        // 핸들러를 사용하여 주기적으로 데이터 업데이트
+        handler.postDelayed(apiRunnable, updateInterval)
 
         // 상단 탭 컨트롤
         binding.ivStockOrder.visibility = View.VISIBLE
@@ -166,5 +188,10 @@ class OrderActivity : AppCompatActivity() {
             }
         }
 
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        // 액티비티가 종료될 때 핸들러 작업을 삭제하여 반복을 종료합니다.
+        handler.removeCallbacksAndMessages(null)
     }
 }
