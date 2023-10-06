@@ -102,8 +102,8 @@ public class OrderServiceImpl implements OrderService {
 				// Update order amount.
 				orderAmount += ((double) lastPrice) * orderSummaryRemain;
 				// Update user asset.
-				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, -orderSummaryRemain, lastPrice);
-				assetsService.saveTrade(userNo, tokenNo, orderSummaryRemain, lastPrice);
+//				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, -orderSummaryRemain, lastPrice);
+//				assetsService.saveTrade(userNo, tokenNo, orderSummaryRemain, lastPrice);
 				assetsService.updatePossessKRW(orderSummary.getUserNo(), (long) (((double) lastPrice) * orderSummaryRemain));
 				// Update remain.
 				remain -= orderSummaryRemain;
@@ -129,8 +129,8 @@ public class OrderServiceImpl implements OrderService {
 				// Update order amount.
 				orderAmount += ((double) lastPrice) * remain;
 				// Update user asset.
-				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, -remain, lastPrice);
-				assetsService.saveTrade(userNo, tokenNo, remain, lastPrice);
+//				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, -remain, lastPrice);
+//				assetsService.saveTrade(userNo, tokenNo, remain, lastPrice);
 				assetsService.updatePossessKRW(orderSummary.getUserNo(), (long) (((double) lastPrice) * remain));
 				// Update remain.
 				remain = 0.0;
@@ -198,8 +198,8 @@ public class OrderServiceImpl implements OrderService {
 				// Update order amount.
 				orderAmount += ((double) lastPrice) * orderSummaryRemain;
 				// Update user asset.
-				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, orderSummaryRemain, lastPrice);
-				assetsService.saveTrade(userNo, tokenNo, -orderSummaryRemain, lastPrice);
+//				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, orderSummaryRemain, lastPrice);
+//				assetsService.saveTrade(userNo, tokenNo, -orderSummaryRemain, lastPrice);
 				// Update remain.
 				remain -= orderSummaryRemain;
 			}
@@ -224,8 +224,8 @@ public class OrderServiceImpl implements OrderService {
 				// Update order amount.
 				orderAmount += ((double) lastPrice) * remain;
 				// Update user asset.
-				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, remain, lastPrice);
-				assetsService.saveTrade(userNo, tokenNo, -remain, lastPrice);
+//				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, remain, lastPrice);
+//				assetsService.saveTrade(userNo, tokenNo, -remain, lastPrice);
 				// Update remain.
 				remain = 0.0;
 				break;
