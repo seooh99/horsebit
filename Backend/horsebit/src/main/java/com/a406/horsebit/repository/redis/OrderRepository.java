@@ -333,7 +333,7 @@ public class OrderRepository {
         return sellTotalVolumeRBucket.get();
     }
 
-    public Double findTradeTotalVolume(Long tokenNo) {
+    public Double findTradeTotalAmount(Long tokenNo) {
         RBucket<Double> tradeTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_TRADE_TOTAL_VOLUME_PREFIX + tokenNo);
         return tradeTotalVolumeRBucket.get();
     }
@@ -348,9 +348,9 @@ public class OrderRepository {
         sellTotalVolumeRBucket.set(sellTotalVolumeRBucket.get() + changedVolume);
     }
 
-    public void changeTradeTotalVolume(Long tokenNo, Double changedVolume) {
+    public void changeTradeTotalAmount(Long tokenNo, Double changedAmount) {
         RBucket<Double> tradeTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_TRADE_TOTAL_VOLUME_PREFIX + tokenNo);
-        tradeTotalVolumeRBucket.set(tradeTotalVolumeRBucket.get() + changedVolume);
+        tradeTotalVolumeRBucket.set(tradeTotalVolumeRBucket.get() + changedAmount);
     }
 
     /////////////////////////////////

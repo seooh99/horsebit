@@ -111,6 +111,8 @@ public class OrderServiceImpl implements OrderService {
 				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, -orderSummaryRemain, lastPrice);
 				assetsService.saveTrade(userNo, tokenNo, orderSummaryRemain, lastPrice);
 				assetsService.updatePossessKRW(orderSummary.getUserNo(), (long) (((double) lastPrice) * orderSummaryRemain));
+				// Update total trade amount.
+				orderRepository.changeTradeTotalAmount(tokenNo, ((double) lastPrice) * orderSummaryRemain);
 				// Update remain.
 				remain -= orderSummaryRemain;
 			}
@@ -138,6 +140,8 @@ public class OrderServiceImpl implements OrderService {
 				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, -remain, lastPrice);
 				assetsService.saveTrade(userNo, tokenNo, remain, lastPrice);
 				assetsService.updatePossessKRW(orderSummary.getUserNo(), (long) (((double) lastPrice) * remain));
+				// Update total trade amount.
+				orderRepository.changeTradeTotalAmount(tokenNo, ((double) lastPrice) * remain);
 				// Update remain.
 				remain = 0.0;
 			}
@@ -206,6 +210,8 @@ public class OrderServiceImpl implements OrderService {
 				// Update user asset.
 				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, orderSummaryRemain, lastPrice);
 				assetsService.saveTrade(userNo, tokenNo, -orderSummaryRemain, lastPrice);
+				// Update total trade amount.
+				orderRepository.changeTradeTotalAmount(tokenNo, ((double) lastPrice) * orderSummaryRemain);
 				// Update remain.
 				remain -= orderSummaryRemain;
 			}
@@ -232,6 +238,8 @@ public class OrderServiceImpl implements OrderService {
 				// Update user asset.
 				assetsService.saveTrade(orderSummary.getUserNo(), tokenNo, remain, lastPrice);
 				assetsService.saveTrade(userNo, tokenNo, -remain, lastPrice);
+				// Update total trade amount.
+				orderRepository.changeTradeTotalAmount(tokenNo, ((double) lastPrice) * remain);
 				// Update remain.
 				remain = 0.0;
 				break;

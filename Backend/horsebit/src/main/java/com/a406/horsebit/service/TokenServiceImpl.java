@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.a406.horsebit.domain.Possess;
-import com.a406.horsebit.domain.Token;
 import com.a406.horsebit.dto.HorseDTO;
 import com.a406.horsebit.dto.PriceDTO;
 import com.a406.horsebit.dto.PriceRateOfChangeDTO;
@@ -103,7 +102,7 @@ public class TokenServiceImpl implements TokenService {
 			token.setPriceRateOfChange(rRate);
 			
 			//TODO: NullPointer 오류나는 건 - findTradeTotalVolume 수정 후 정상 확인 필요
-			token.setVolume(orderRepository.findTradeTotalVolume(tokenNo)); //현재 거래금액 조회
+			token.setVolume(orderRepository.findTradeTotalAmount(tokenNo)); //현재 거래금액 조회
 			ind++;
 
 			result.add(token);
