@@ -10,6 +10,7 @@ import com.a406.horsebit.domain.Token;
 import com.a406.horsebit.domain.redis.Order;
 import com.a406.horsebit.domain.redis.OrderSummary;
 import com.a406.horsebit.domain.redis.VolumePage;
+import com.a406.horsebit.dto.TokenDTO;
 import com.a406.horsebit.repository.TokenRepository;
 import com.a406.horsebit.repository.redis.CandleRepository;
 import com.a406.horsebit.repository.redis.OrderRepository;
@@ -47,8 +48,8 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderDTO> getOrders(Long userNo, Long tokenNo) {
 		log.info("OrderServiceImpl::getOrders() START");
-		Token token = tokenRepository.getReferenceById(tokenNo);
-		return orderRepository.findAllOrder(userNo, tokenNo, token.getCode());
+		TokenDTO tokenDTO = tokenRepository.findTokenByTokenNo(tokenNo);
+		return orderRepository.findAllOrder(userNo, tokenNo, tokenDTO.getCode());
 	}
 
 	@Override
