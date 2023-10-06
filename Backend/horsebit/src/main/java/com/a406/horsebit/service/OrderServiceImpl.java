@@ -6,9 +6,11 @@ import java.util.List;
 
 import com.a406.horsebit.aop.DistributedLock;
 import com.a406.horsebit.constant.OrderConstant;
+import com.a406.horsebit.domain.Token;
 import com.a406.horsebit.domain.redis.Order;
 import com.a406.horsebit.domain.redis.OrderSummary;
 import com.a406.horsebit.domain.redis.VolumePage;
+import com.a406.horsebit.repository.TokenRepository;
 import com.a406.horsebit.repository.redis.CandleRepository;
 import com.a406.horsebit.repository.redis.OrderRepository;
 import com.a406.horsebit.repository.redis.PriceRepository;
@@ -26,16 +28,18 @@ public class OrderServiceImpl implements OrderService {
 	private final OrderRepository orderRepository;
 	private final PriceRepository priceRepository;
 	private final CandleRepository candleRepository;
+	private final TokenRepository tokenRepository;
 	private final OrderAsyncService orderAsyncService;
 	private final AssetsService assetsService;
 
 	private final double TENTH_MINIMUM_ORDER_QUANTITY = 0.0001;
 
 	@Autowired
-	public OrderServiceImpl(OrderRepository orderRepository, PriceRepository priceRepository, CandleRepository candleRepository, OrderAsyncService orderAsyncService, AssetsService assetsService) {
+	public OrderServiceImpl(OrderRepository orderRepository, PriceRepository priceRepository, CandleRepository candleRepository, TokenRepository tokenRepository, OrderAsyncService orderAsyncService, AssetsService assetsService) {
 		this.orderRepository = orderRepository;
 		this.priceRepository = priceRepository;
 		this.candleRepository = candleRepository;
+		this.tokenRepository = tokenRepository;
 		this.orderAsyncService = orderAsyncService;
 		this.assetsService = assetsService;
 	}
@@ -43,7 +47,8 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderDTO> getOrders(Long userNo, Long tokenNo) {
 		log.info("OrderServiceImpl::getOrders() START");
-		return orderRepository.findAllOrder(userNo, tokenNo, "A");
+		Token token = tokenRepository.getReferenceById(tokenNo);
+		return orderRepository.findAllOrder(userNo, tokenNo, token.getCode());
 	}
 
 	@Override
