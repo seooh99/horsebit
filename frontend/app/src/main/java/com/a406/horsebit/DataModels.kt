@@ -5,9 +5,9 @@ import java.util.Date
 
 // 미체결 내역 조회
 data class NotConcludedResponseBodyOrderModel(
-    val orderNo: Int,  //주문번호
-    val userNo: Int,  //유저번호
-    val tokenNo: Int,  //토큰번호
+    val orderNo: Long,  //주문번호
+    val userNo: Long,  //유저번호
+    val tokenNo: Long,  //토큰번호
     val tokenCode: String, //토큰코드명
     val price: Long,  //가격
     val quantity: Double,  //주문수량
