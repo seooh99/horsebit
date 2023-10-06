@@ -135,8 +135,11 @@ class StockOrderFragment : Fragment() {
                 ft.commit()
             }
             2->{
-                val changeFragment = OrderTransactionHistoryTabFragment()
+                val bundle = Bundle()
+                bundle.putLong("tokenNo", tokenNo)
 
+                val changeFragment = OrderTransactionHistoryTabFragment()
+                changeFragment.arguments = bundle
                 ft.replace(R.id.fl_OrderTab, changeFragment)
                 ft.commit()
             }

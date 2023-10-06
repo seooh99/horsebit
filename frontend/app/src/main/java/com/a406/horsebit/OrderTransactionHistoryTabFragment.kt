@@ -19,7 +19,9 @@ import retrofit2.Response
 class OrderTransactionHistoryTabFragment : Fragment() {
 
     private lateinit var binding : FragmentOrderTransactionHistoryTabBinding
-    val api = APIS.create();
+    val api = APIS.create()
+
+    var tokenNo: Long = 0
 
     var transactionItemList : ArrayList<TransactionShow> = ArrayList()
 
@@ -30,6 +32,8 @@ class OrderTransactionHistoryTabFragment : Fragment() {
 
         binding.rvTransactionTable.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)   // VERTICAL은 세로로
         binding.rvTransactionTable.setHasFixedSize(true) // 성능 개선
+
+        tokenNo = arguments?.getLong("tokenNo") ?: 0
 
         changeColor(0)
         makeData(0)
@@ -59,7 +63,7 @@ class OrderTransactionHistoryTabFragment : Fragment() {
                 val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
                 val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
 
-                api.notConcluded(tokenNo = 1, authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<NotConcludedResponseBodyOrderModel>> {
+                api.notConcluded(tokenNo = tokenNo, authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<NotConcludedResponseBodyOrderModel>> {
                     override fun onResponse(call: Call<ArrayList<NotConcludedResponseBodyOrderModel>>, response: Response<ArrayList<NotConcludedResponseBodyOrderModel>>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "미체결 내역 조회: 200 Success")
@@ -96,7 +100,7 @@ class OrderTransactionHistoryTabFragment : Fragment() {
                 val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
                 val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
 
-                api.concluded(tokenNo = 1, authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<ConcludedResponseBodyOrderModel>> {
+                api.concluded(tokenNo = tokenNo, authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<ConcludedResponseBodyOrderModel>> {
                     override fun onResponse(call: Call<ArrayList<ConcludedResponseBodyOrderModel>>, response: Response<ArrayList<ConcludedResponseBodyOrderModel>>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "체결 내역 조회: 200 Success")
