@@ -92,7 +92,7 @@ public class AssetsServiceImpl implements AssetsService {
 				amtToken += possess.getTotalAmountPurchase();
 
 				Long curToken = possess.getTokenNo();
-				Long curQuantity = possess.getQuantity();
+				Long curQuantity = (long) possess.getQuantity();
 				if(tokenMap.containsKey(curToken)) {
 					Long cnt = tokenMap.get(curToken);
 					cnt += curQuantity;
@@ -269,9 +269,10 @@ public class AssetsServiceImpl implements AssetsService {
 		Possess curResult = possessRepository.findByUserNoAndTokenNo(userNo, tokenNo);
 
 		if(curResult == null) { //userNo가 tokenNo를 현재 보유하고 있지 않으면
+			curResult = new Possess();
 			curResult.setUserNo(userNo);
 			curResult.setTokenNo(tokenNo);
-			curResult.setQuantity((long)volume);
+			curResult.setQuantity(volume);
 			curResult.setTotalAmountPurchase((long)volume * currentPrice);
 
 			possessRepository.save(curResult);
