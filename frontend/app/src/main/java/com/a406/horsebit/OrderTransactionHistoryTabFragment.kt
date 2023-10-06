@@ -72,7 +72,7 @@ class OrderTransactionHistoryTabFragment : Fragment() {
 
                             if(responseBody != null) {
                                 for(order in responseBody) {
-                                    val transaction = TransactionShow(true, order.sellOrBuy, order.orderTime, order.tokenCode, order.price, order.quantity, order.remainQuantity)
+                                    val transaction = TransactionShow(false, order.sellOrBuy, order.orderTime, order.tokenCode, order.price, order.quantity, order.remainQuantity)
                                     transactionItemList.add(transaction)
                                 }
                             }
@@ -109,7 +109,7 @@ class OrderTransactionHistoryTabFragment : Fragment() {
 
                             if(responseBody != null) {
                                 for(execution in responseBody) {
-                                    val transaction = TransactionShow(false, execution.sellOrBuy, execution.timestamp, execution.tokenCode, execution.price, execution.quantity, execution.quantity)
+                                    val transaction = TransactionShow(true, execution.sellOrBuy, execution.timestamp, execution.tokenCode, execution.price, execution.quantity, execution.quantity)
                                     transactionItemList.add(transaction)
                                 }
                             }
