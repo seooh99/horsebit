@@ -1,0 +1,9 @@
+services:
+    nginx:
+        image: nginx:1.25.2
+        restart: always
+        network_mode: host
+        volumes:
+            - /etc/letsencrypt:/etc/letsencrypt
+            - /var/lib/letsencrypt:/var/lib/letsencrypt
+            - ./docker-volume/conf.d:/etc/nginx/conf.d

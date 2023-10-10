@@ -1,0 +1,11 @@
+services:
+  jenkins:
+    image: jenkins/jenkins:2.423-jdk17-docker
+    restart: unless-stopped
+    volumes:
+      - ./docker-volume:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JENKINS_OPTS="--prefix=/jenkins"
+    ports:
+      - "8080:8080"
